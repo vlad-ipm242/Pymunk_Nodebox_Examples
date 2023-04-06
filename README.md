@@ -6,3 +6,5 @@ Use [Portable Python 2.7 with Nodebox for OpenGL 1.7 and Pymunk 5.7.0](https://d
 [Відеоурок 1](https://youtu.be/4peh38S3GyA)
 
 [Відеоурок 2](https://youtu.be/Q4cHL8yTevw)
+
+[Відеоурок 3](https://youtu.be/uq-OhuPkK-Q)
