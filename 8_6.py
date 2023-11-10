@@ -47,6 +47,8 @@ def inCircle(x,y,cx,cy,R):
 
 def inSector(x,y,cx,cy,R,a):
     angle=getAngle(cx,cy,x,y)
+    a=a%(2*math.pi)
+    angle=angle%(2*math.pi)
     if inCircle(x,y,cx,cy,R) and a-0.5<angle<a+0.5:
         return True
     return False
