@@ -1,7 +1,7 @@
 #encoding: utf-8
 import socket
 from nodebox.graphics import *
-import pymunk, random, math
+import pymunk, random, math, time
 import pymunk.pyglet_util
 space = pymunk.Space()
 
@@ -12,30 +12,43 @@ def send(x):
     s.sendall(str(x))
     x=s.recv(255)
     s.close()
+    time.sleep(0.1)
     return x
 
-def createBody(x,y,shape,*shapeArgs):
+def createBody(shape,*shapeArgs):
     body = pymunk.Body()
-    body.position = x, y
+    body.position = random.uniform(250, 450), random.uniform(150, 350)
     s = shape(body, *shapeArgs)
     s.mass = 1
     s.friction = 1
     space.add(body, s)
     return s #shape!!!
 
-s0=createBody(300, 200, pymunk.Circle, 10, (0,0))
+s0=createBody(pymunk.Circle, 10, (0,0))
 s0.color = (255, 0, 0, 255)
-s1=createBody(300, 300, pymunk.Poly, ((-20,-5),(-20,5),(20,15),(20,-15)))
+s1=createBody(pymunk.Poly, ((-20,-5),(-20,5),(20,15),(20,-15)))
 s1.score=0
-s1.color = (0, 0, 255, 255)
-s2=createBody(200, 300, pymunk.Poly, ((-20,-5),(-20,5),(20,15),(20,-15)))
-s2.color = (0, 255, 0, 255)
+s1.color = (0, 255, 0, 255)
+s2=createBody(pymunk.Poly, ((-20,-5),(-20,5),(20,15),(20,-15)))
+s2.color = (0, 0, 255, 255)
 s2.score=0
-s3=createBody(200, 200, pymunk.Poly, ((-20,-5),(-20,5),(20,15),(20,-15)))
-s3.color = (100, 100, 0, 255)
+s3=createBody(pymunk.Poly, ((-20,-5),(-20,5),(20,15),(20,-15)))
+s3.color = (0, 255, 255, 255)
 s3.score=0
+s4=createBody(pymunk.Poly, ((-20,-5),(-20,5),(20,15),(20,-15)))
+s4.color = (165, 42, 42, 255)
+s4.score=0
+s5=createBody(pymunk.Poly, ((-20,-5),(-20,5),(20,15),(20,-15)))
+s5.color = (128, 128, 128, 255)
+s5.score=0
+s6=createBody(pymunk.Poly, ((-20,-5),(-20,5),(20,15),(20,-15)))
+s6.color = (255, 165, 0, 255)
+s6.score=0
+s7=createBody(pymunk.Poly, ((-20,-5),(-20,5),(20,15),(20,-15)))
+s7.color = (173, 216, 230, 255)
+s7.score=0
 
-S={s0,s1,s2,s3}
+S={s0,s1,s2,s3,s4,s5,s6,s7}
 
 def simFriction():
     for s in S:
