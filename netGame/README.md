@@ -12,7 +12,7 @@
 2. Завантажити [архів](https://github.com/vkopey/Pymunk_Nodebox_Examples/archive/refs/heads/main.zip)
 3. Розпакувати архіви. Бажано в корінь диску D
 4. Запустити сервер server.bat **Увага! Потенційно небезпечно! Див. примітку нижче**
-5. За потреби модифікуйте код клієнта client.py
+5. За потреби удосконалити код клієнта client.py
 6. За допомогою інтерпретатора Python запустити client.py. Способи запуску:
   - Запуск звичайний:
   "d:\Portable\Portable Python-2.7.17\App\Python\python.exe" client.py
@@ -28,7 +28,7 @@
 >>> b
 <__main__.Robot object at 0x0B218F50>
 >>> b.setangle(5)
->>> b.insect()
+>>> b.insector()
 False
 >>> b.setvel(100)
 >>>
