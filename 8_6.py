@@ -43,10 +43,10 @@ s0.score = 0
 s3 = createBody(200, 300, "poly", ((-20, -5), (-20, 5), (20, 15), (20, -15)))
 s3.color = (0, 255, 0, 255)
 s3.score = 0
-s3.body.Q = [[0, 0], [0, 0], [0, 0]]
-#s3.body.Q=[[0, 0], [1, -1], [-1, 1]]
-#Q=[нічого[залишати, змінювати], об'єкт[залишати, змінювати], антиоб'єкт[залишати, змінювати]]
-s3.body.action=0 # 0 - залишати, 1 - змінювати (випадковий кут)
+s3.body.Q = [[0.0, 0.0], [0.0, 0.0], [0.0, 0.0]]
+# s3.body.Q=[[0, 0], [1, -1], [-1, 1]]
+# Q=[нічого[залишати, змінювати], об'єкт[залишати, змінювати], антиоб'єкт[залишати, змінювати]]
+s3.body.action = 0  # 0 - залишати, 1 - змінювати (випадковий кут)
 
 s1 = createBody(300, 200, "circle", 10, (0, 0))
 s1.color = (255, 255, 0, 255)
@@ -81,10 +81,10 @@ def inSector(x, y, cx, cy, R, a):
     return False
 
 
-def strategy2(b=None):
+def strategy(b=None):
     """
     Стратегія робота з Q-learning.
-    Робот сканує сектор, визначає об'єкти та навчається оптимальній поведінці.
+    Робот сканує сектор, визначає об'єкти та навчається оптимальної поведінки.
     """
     if b is None:
         b = s3.body
@@ -117,12 +117,17 @@ def strategy2(b=None):
             state = 0
             reward = 0
 
-        b.Q[state][b.action] += reward  # Оновлюємо Q-таблицю
+        # Оновлюємо Q-таблицю
+        alpha = 0.1  # швидкість навчання
+        gamma = 0.9  # дисконтний фактор (важливість майбутнього)
+        old_value = b.Q[state][b.action]
+        next_max = max(b.Q[state])  # максимальна винагорода для цього стану
+        b.Q[state][b.action] = old_value + alpha * (reward + gamma * next_max - old_value)
         print(f"State: {state}, Action: {b.action}, Q: {b.Q}")
 
         # Вибираємо дію (epsilon-greedy)
-        act = b.Q[state][b.action]
-        if random.random() < abs(1.0 / (act + 0.1)):  # Випадкова дія
+        epsilon = max(0.1, 0.5 * math.exp(-frame_count / 1000))
+        if random.random() < epsilon:
             b.action = random.choice([0, 1])
         else:
             b.action = np.argmax(b.Q[state])  # Оптимальна дія
@@ -141,9 +146,9 @@ def scr(s, s0, s3, p=1):
 
     if not inCircle(bx, by, 350, 250, 180):
         if getDist(bx, by, s0x, s0y) < getDist(bx, by, s3x, s3y):
-            s0.score=s0.score+p
+            s0.score = s0.score + p
         else:
-            s3.score=s3.score+p
+            s3.score = s3.score + p
         s.body.position = random.randint(200, 400), random.randint(200, 300)
 
 
@@ -209,7 +214,7 @@ while running:
     pygame.draw.circle(screen, (0, 0, 0), (350, 250), 175, 2)
 
     manualControl()
-    strategy2()
+    strategy()
     score()
     simFriction()
 
